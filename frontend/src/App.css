@@ -1,0 +1,32 @@
+body {
+  background: #ffffff;
+  color: #e0e6ff;
+  font-family: Arial, sans-serif;
+}
+
+.dashboard {
+  padding: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.card {
+  background: #121a2f;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.warning {
+  background: #ff3b3b;
+  color: white;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+}
+
+.status.connected { color: #4cff4c; }
+.status.error { color: red; }
