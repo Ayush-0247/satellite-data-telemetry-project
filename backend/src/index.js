@@ -14,6 +14,11 @@ function generateTelemetry() {
     temperature_c: +(15 + Math.random() * 60).toFixed(1),
     battery_percent: +(40 + Math.random() * 60).toFixed(0),
     signal_db: +(-85 + Math.random() * 20).toFixed(1),
+    fuel_percent: +(30 + Math.random() * 70).toFixed(1),
+    memory_usage_percent: +(30 + Math.random() * 50).toFixed(1),
+    command_latency_ms: +(120 + Math.random() * 400).toFixed(0),
+ heat_shield_integrity: +(70 + Math.random() * 30).toFixed(1),
+
 
     gps: {
       latitude: +(-90 + Math.random() * 180).toFixed(5),
