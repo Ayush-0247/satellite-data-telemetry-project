@@ -22,7 +22,7 @@ function generateTelemetry() {
   };
 }
 
-// API Route
+
 app.get("/telemetry", (req, res) => {
   res.json(generateTelemetry());
 });

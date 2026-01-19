@@ -1,7 +1,16 @@
 import { useEffect, useState } from "react";
-import TelemetryCard from "./components/TelemetryCard";
-import WarningBanner from "./components/WarningBanner";
+import axios from "axios";
 import "./App.css";
+import { ResponsiveContainer } from "recharts";
+
+function TelemetryCard({ label, value }) {
+  return (
+    <div className="card">
+      <h3>{label}</h3>
+      <p>{value}</p>
+    </div>
+  );
+}
 
 function App() {
   const [telemetry, setTelemetry] = useState(null);
@@ -10,9 +19,8 @@ function App() {
   useEffect(() => {
     const fetchTelemetry = async () => {
       try {
-        const res = await fetch("http://localhost:5000/telemetry");
-        const data = await res.json();
-        setTelemetry(data);
+        const res = await axios.get("http://localhost:5000/telemetry");
+        setTelemetry(res.data);
         setStatus("connected");
       } catch {
         setStatus("error");
@@ -20,7 +28,7 @@ function App() {
     };
 
     fetchTelemetry();
-    const interval = setInterval(fetchTelemetry, 1000);
+    const interval = setInterval(fetchTelemetry, 2000);
     return () => clearInterval(interval);
   }, []);
 
@@ -28,15 +36,47 @@ function App() {
 
   return (
     <div className="dashboard">
-      <h1>🛰️ Mission Telemetry Dashboard</h1>
 
-      <WarningBanner telemetry={telemetry} />
+
+
+
+<header className="top-header">
+  <div className="title-block">
+    <h1>Mission Telemetry Dashboard</h1>
+    <p className="subtitle">Mission ID • SAT-IX-2026</p>
+  </div>
+
+  <div className="status-block">
+    <span className="status-dot"></span>
+    <span className="status-text">LIVE FEED</span>
+  </div>
+
+  {telemetry.signal_db < -75 && (
+        <div className="alert danger">⚠ Signal Strength Critical</div>
+      )}
+</header>
+
+
+
+
+
+
+      
 
       <div className="grid">
         <TelemetryCard label="Altitude" value={`${telemetry.altitude_km} km`} />
-        <TelemetryCard label="Velocity" value={`${telemetry.velocity_kms} km/s`} />
-        <TelemetryCard label="Temperature" value={`${telemetry.temperature_c} °C`} />
-        <TelemetryCard label="Battery" value={`${telemetry.battery_percent} %`} />
+        <TelemetryCard
+          label="Velocity"
+          value={`${telemetry.velocity_kms} km/s`}
+        />
+        <TelemetryCard
+          label="Temperature"
+          value={`${telemetry.temperature_c} °C`}
+        />
+        <TelemetryCard
+          label="Battery"
+          value={`${telemetry.battery_percent} %`}
+        />
         <TelemetryCard label="Signal" value={`${telemetry.signal_db} dB`} />
         <TelemetryCard
           label="GPS"

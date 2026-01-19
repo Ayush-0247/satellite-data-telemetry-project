@@ -1,32 +1,209 @@
+/* ================= ROOT ================= */
+:root {
+  --bg-main: #eef2f7;
+  --panel-bg: linear-gradient(145deg, #0f172a, #020617);
+  --header-bg: linear-gradient(135deg, #0b1020, #121a35);
+
+  --primary: #3b82f6;
+  --success: #22c55e;
+  --danger: #ef4444;
+
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-light: #e5e7eb;
+}
+
+/* ================= GLOBAL ================= */
 body {
-  background: #ffffff;
-  color: #e0e6ff;
-  font-family: Arial, sans-serif;
+  margin: 0;
+  background: var(--bg-main);
+  font-family: "Inter", Arial, sans-serif;
+  color: var(--text-main);
 }
 
+/* ================= DASHBOARD WRAPPER ================= */
 .dashboard {
-  padding: 20px;
+  margin: 40px;
+  padding: 30px 40px;
+  background: #d1fae5;
+  border-radius: 24px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
+/* ================= HEADER ================= */
+.top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 26px;
+  background: var(--header-bg);
+  border-radius: 18px;
+  box-shadow: 0 15px 30px rgba(2, 6, 23, 0.6);
+  position: relative;
+  height: 100px;
 }
 
-.card {
-  background: #121a2f;
-  padding: 15px;
-  border-radius: 10px;
+/* TITLE */
+.title-block h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #e6eaff;
+  letter-spacing: 0.6px;
 }
 
-.warning {
-  background: #ff3b3b;
-  color: white;
-  padding: 10px;
-  margin-bottom: 15px;
+.subtitle {
+  font-size: 0.75rem;
+  margin-top: 4px;
+  color: #9aa4ff;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+/* ================= STATUS ================= */
+.status-block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: rgba(34, 197, 94, 0.1);
+  border-radius: 999px;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 10px var(--success);
+  animation: statusPulse 1.6s infinite;
+}
+
+.status-text {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: var(--success);
+}
+
+/* ================= ALERT ================= */
+.alert {
+  position: absolute;
+  right: 24px;
+  bottom: +10px;
+  padding: 10px 18px;
   border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  animation: slideDown 0.35s ease-out;
 }
 
-.status.connected { color: #4cff4c; }
-.status.error { color: red; }
+.alert.danger {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ff5c5c;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  box-shadow: 0 0 18px rgba(239, 68, 68, 0.35);
+}
+
+/* ================= GRID ================= */
+.grid {
+  margin-top: 35px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 22px;
+}
+
+/* ================= CARDS ================= */
+.card {
+  background: var(--panel-bg);
+  border-radius: 18px;
+  padding: 22px;
+  color: var(--text-light);
+  box-shadow: 0 22px 45px rgba(2, 6, 23, 0.55);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 30px 65px rgba(2, 6, 23, 0.7);
+}
+
+.card:hover::after {
+  opacity: 1;
+}
+
+/* ================= CARD CONTENT ================= */
+.card h3 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.value {
+  margin-top: 10px;
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.unit {
+  margin-left: 6px;
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+/* ================= STATES ================= */
+.status.connected {
+  color: var(--success);
+}
+
+.status.error {
+  color: var(--danger);
+}
+
+/* ================= ANIMATIONS ================= */
+@keyframes statusPulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.6);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
